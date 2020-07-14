@@ -13,7 +13,7 @@ void loop(){
 }
 
 void pin_ISR() {
-  motionState = digitalRead(2);
+  motionState = !motionState;
   if (motionState){
     digitalWrite(13, HIGH);
     Serial.println("Motion detected");
