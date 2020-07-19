@@ -1,5 +1,5 @@
-volatile int motionState = 0;         // variable for reading the motion status
-volatile int soundState = 0;         // variable for reading the sound status
+volatile boolean motionState;         // variable for reading the motion status
+volatile boolean soundState;         // variable for reading the sound status
 
 void setup(){
   pinMode(13, OUTPUT);
@@ -13,17 +13,13 @@ void setup(){
 }
 
 void loop(){
-  if (motionState && !soundState){
+  if (motionState){
     digitalWrite(13, HIGH);
     Serial.println("Motion detected");
   }
-  if (soundState && !motionState){
+  if (soundState){
     digitalWrite(13, HIGH);
     Serial.println("Sound detected");
-  }
-  if (motionState && soundState){
-    digitalWrite(13, HIGH);
-    Serial.println("Motion and sound detected");
   }
   if (!motionState && !soundState){
     digitalWrite(13, LOW);
@@ -37,5 +33,11 @@ void pin_ISR() {
 }
 
 void sound_ISR() {
-  soundState = !soundState;
+  if(digitalRead(3)== 1){
+    soundState = HIGH;
+  }
+  else{
+    soundState = LOW;
+  }
+
 }
